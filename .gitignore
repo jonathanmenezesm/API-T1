@@ -1,0 +1,11 @@
+# Ignorar arquivos e diretórios sensíveis
+.env
+venv/
+__pycache__/
+
+# Ignorar arquivos temporários ou de sistema
+*.pyc
+*.pyo
+*.log
+.DS_Store
+Thumbs.db
