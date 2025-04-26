@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from src.model.colaborador_model import Colaborador
 from src.model import db
+from src.security.security import hash_senha, checar_senha
 #Flask é um micro framework para criação de aplicações web em python
 #blueprint é resposável por criar um grupo de rotas
 #request é um recurso do flask que vai facilitar a captura dos dados na requisição
@@ -28,7 +29,7 @@ def cadastrar_novo_colaborador():
     novo_colaborador = Colaborador(
         nome=dados_requisicao['nome'],
         email=dados_requisicao['email'],
-        senha=dados_requisicao['senha'],
+        senha=hash_senha(dados_requisicao['senha']),
         cargo=dados_requisicao['cargo'],
         salario=dados_requisicao['salario']
     )
@@ -56,3 +57,31 @@ def atualizar_dados_colaborador(id_colaborador):
         colaborador_encontrado['cargo'] = dados_requisicao['cargo']
             
     return jsonify( {'mensagem': 'Colaborador atualizado com sucesso!'}), 200
+
+
+@bp_colaborador.route('/login', methods=['POST'])
+def login():
+    dados_requisicao = request.get_json()
+    
+    email = dados_requisicao.get('email')
+    senha = dados_requisicao.get('senha')
+         
+    if not email or not senha:
+        return jsonify({'mensagem': 'Todos os dados precisam ser preenchidos!'}), 400
+    
+    # SELECT * FROM TABELA WHERE email = email
+    colaborador = db.session.execute(
+        db.select(Colaborador).where(Colaborador.email == email)
+    ).scalar()  # Retorna a linha de informação ou None(não houve nenhum registro como solicitado)
+    
+    if not colaborador:
+        return jsonify({'mensagem': 'Usuário não encontrado'}), 404
+    
+    colaborador = colaborador.to_dict()
+    #colaborador = colaborador.to_dict() #converte o objeto colaborador em dicionário
+    
+    if email == colaborador['email'] and checar_senha(senha, colaborador['senha']):
+        return jsonify({'mensagem': 'Login realizado com sucesso!'}), 200
+    else:
+        return jsonify({'mensagem': 'Credenciais inválidas!'}), 400
+    

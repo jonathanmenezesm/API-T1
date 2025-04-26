@@ -24,3 +24,11 @@ class Colaborador (db.Model): #db.Model -> mapear e criar a tabela
         self.cargo = cargo
         self.salario = salario
     #----------------------------------------------------------
+    
+    def to_dict(self) -> dict:
+        return {
+            'email': self.email,
+            'senha': self.senha
+        }
+    #Método to_dict() converte os dados do colaborador em um dicionário
+      
