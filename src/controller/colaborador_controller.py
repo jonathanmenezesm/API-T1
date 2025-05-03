@@ -2,10 +2,12 @@ from flask import Blueprint, request, jsonify
 from src.model.colaborador_model import Colaborador
 from src.model import db
 from src.security.security import hash_senha, checar_senha
+from flasgger import swag_from
 #Flask é um micro framework para criação de aplicações web em python
 #blueprint é resposável por criar um grupo de rotas
 #request é um recurso do flask que vai facilitar a captura dos dados na requisição
 #jsonify é um recurso do flask que vai facilitar a conversão de dicionário para json
+#flasgger é uma biblioteca que vai facilitar a documentação da API
 
 bp_colaborador = Blueprint('colaborador', __name__, url_prefix='/colaborador')
 
@@ -23,6 +25,9 @@ def pegar_dados():
     return dados
 
 @bp_colaborador.route('/cadastrar', methods=['POST'])
+
+@swag_from('../docs/colaborador/cadastrar_colaborador.yml') #documentação swagger
+
 def cadastrar_novo_colaborador():
     dados_requisicao = request.get_json()  # Captura os dados da requisição
     

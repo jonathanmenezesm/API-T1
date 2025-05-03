@@ -1,0 +1,36 @@
+tags:
+  - Colaborador  # define categoria de colaborador
+description: Endpoint (Rota) para cadastrar um novo colaborador
+parameters:
+  - in: body  # indica que o parâmetro está no corpo da requisição
+    name: corpo
+    required: true  # indica que o parâmetro é obrigatório
+    schema:
+      type: object  # tipo do objeto
+      properties:
+        nome:
+          type: string
+          example: João Silva
+        email:
+          type: string
+          example: teste@teste.com
+        senha:
+          type: string
+          example: senha123
+        cargo:
+          type: string
+          example: Desenvolvedor
+        salario:
+          type: number
+          example: 5000.00
+      required:  # campos obrigatórios do objeto colaborador
+        - nome
+        - email
+        - senha
+        - cargo
+        - salario
+responses:
+  201:
+    description: Colaborador cadastrado com sucesso!
+
+    
