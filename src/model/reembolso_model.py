@@ -1,12 +1,12 @@
 from src.model import db # traz a instancia do sqlalchemy
 from sqlalchemy.schema import Column, ForeignKey # traz as classes Column e ForeignKey do sqlalchemy
-from sqlalchemy.types import Integer, String, DECIMAL
+from sqlalchemy import Column, Integer, String, Float, Date, func, DECIMAL # traz as classes Column, Integer, String, Float, Date, func e DECIMAL do sqlalchemy
 
 #para nomear classe, usar PascalCase (primeira letra maiuscula e sem underline)
 #criação da classe Reembolso
 class Reembolso(db.Model):
     #--------- atributos da tabela -----------
-    # id = Column(Integer, primary_key=True, autoincrement=True) #chave primaria, não é necessário passar como parâmetro, pois, é autoincrementada pelo banco de dados.
+    id = Column(Integer, primary_key=True, autoincrement=True) #chave primaria, não é necessário passar como parâmetro, pois, é autoincrementada pelo banco de dados.
     colaborador = Column(String(100), nullable=False) #colaborador
     empresa = Column(String(50), nullable=False) #empresa
     num_prestacao = Column(Integer, nullable=False) #numero da prestacao
@@ -20,14 +20,14 @@ class Reembolso(db.Model):
     moeda = Column(String(10)) #moeda
     distancia_km = Column(String(255))
     valor_km = Column(DECIMAL(10, 2)) #valor por km
-    valor_faturado = Column(DECIMAL(10, 2), nullable) #valor faturado
+    valor_faturado = Column(DECIMAL(10, 2), nullable=False) #valor faturado
     despesa = Column(DECIMAL(10, 2)) #despesa
     id_colaborador = Column(Integer, ForeignKey(column='colaborador.id'), nullable= False) #chave estrangeira para a tabela colaborador
     status = Column(String(30), nullable=False) #status do reembolso (aprovado, reprovado, pendente)
     #--------- atributos da tabela -----------
     
     #--------- construtor da classe -----------
-    def __init__(self, id, colaborador, empresa, num_prestacao, descricao, data, tipo_reembolso, centro_custo, ordem_interna, divisao, pep, moeda, distancia_km, valor_km, valor_faturado, despesa, id_colaborador, status):
+    def __init__(self, colaborador, empresa, num_prestacao, descricao, data, tipo_reembolso, centro_custo, ordem_interna, divisao, pep, moeda, distancia_km, valor_km, valor_faturado, despesa, id_colaborador, status):
         # self.id = id // o id é gerado automaticamente pelo banco de dados, não sendo necessário passar como parâmetro
         self.colaborador = colaborador
         self.empresa = empresa

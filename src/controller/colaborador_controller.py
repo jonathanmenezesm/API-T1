@@ -3,11 +3,11 @@ from src.model.colaborador_model import Colaborador
 from src.model import db
 from src.security.security import hash_senha, checar_senha
 from flasgger import swag_from
-#Flask é um micro framework para criação de aplicações web em python
-#blueprint é resposável por criar um grupo de rotas
-#request é um recurso do flask que vai facilitar a captura dos dados na requisição
-#jsonify é um recurso do flask que vai facilitar a conversão de dicionário para json
-#flasgger é uma biblioteca que vai facilitar a documentação da API
+#L1 Flask é um micro framework para criação de aplicações web em python
+#L1 blueprint é resposável por criar um grupo de rotas
+#L1 request é um recurso do flask que vai facilitar a captura dos dados na requisição
+#L1 jsonify é um recurso do flask que vai facilitar a conversão de dicionário para json
+#L5 flasgger é uma biblioteca que vai facilitar a documentação da API
 
 bp_colaborador = Blueprint('colaborador', __name__, url_prefix='/colaborador')
 
