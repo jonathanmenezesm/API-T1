@@ -65,6 +65,9 @@ def atualizar_dados_colaborador(id_colaborador):
 
 
 @bp_colaborador.route('/login', methods=['POST'])
+
+@swag_from('../docs/colaborador/login.yml') #documentação swagger
+
 def login():
     dados_requisicao = request.get_json()
     
