@@ -8,7 +8,7 @@ bp_reembolso = Blueprint('reembolso', __name__, url_prefix='/reembolso')
 # Rota para criar um novo reembolso
 @bp_reembolso.route('/refunds/new', methods=['POST', 'OPTIONS'])
 def cadastrar_reembolsos():
-    print(f"Método recebido: {request.method}")  # Log do método HTTP recebido
+    # print(f"Método recebido: {request.method}")  # Log do método HTTP recebido
 
     if request.method == 'OPTIONS':
         # Responde ao preflight
@@ -16,7 +16,7 @@ def cadastrar_reembolsos():
 
     if request.method == 'POST':
         dados_requisicao = request.get_json()
-        print(f"Dados recebidos: {dados_requisicao}")  # Log dos dados recebidos
+        # print(f"Dados recebidos: {dados_requisicao}")  # Log dos dados recebidos
 
         if not isinstance(dados_requisicao, list):
             return jsonify({'erro': 'Os dados enviados devem ser uma lista de reembolsos.'}), 400
@@ -40,7 +40,7 @@ def cadastrar_reembolsos():
                     valor_km=dados['valorKm'],
                     valor_faturado=dados['valorFaturado'],
                     despesa=dados['despesa'],
-                    id_colaborador=1,
+                    id_colaborador=1, # ID do colaborador fixo para teste, deve ser alterado para pegar o ID do colaborador logado (estudar JWT)
                     status="Pendente"
                 )
                 reembolsos.append(novo_reembolso)
