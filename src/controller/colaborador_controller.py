@@ -24,6 +24,8 @@ dados = [
 def pegar_dados(): 
     return dados
 
+# -------- Rota para CADASTRAR um novo colaborador --------
+#endereço/colaborador/cadastrar
 @bp_colaborador.route('/cadastrar', methods=['POST'])
 
 @swag_from('../docs/colaborador/cadastrar_colaborador.yml') #documentação swagger
@@ -43,9 +45,10 @@ def cadastrar_novo_colaborador():
     db.session.add(novo_colaborador)  # Adiciona o novo colaborador à sessão do banco de dados
     db.session.commit() # Salva as alterações no banco de dados
     return jsonify({'Mensagem:': 'Colaborador cadastrado com sucesso!'}), 201
+# -------- FIM DA Rota para cadastrar um novo colaborador --------
 
-#Sinaliza que os dados enviados
-#endereço/colaborador/atualizar/10030
+# -------- Rota para ATUALIZAR um colaborador --------
+#endereço/colaborador/atualizar/<ID_COLABORADOR>
 @bp_colaborador.route('/atualizar/<int:id_colaborador>', methods=['PUT'])
 def atualizar_dados_colaborador(id_colaborador):
     
@@ -63,7 +66,9 @@ def atualizar_dados_colaborador(id_colaborador):
             
     return jsonify( {'mensagem': 'Colaborador atualizado com sucesso!'}), 200
 
+# -------- FIM DA Rota para ATUALIZAR um colaborador --------
 
+# -------- Rota para fazer LOGIN de um colaborador --------
 @bp_colaborador.route('/login', methods=['POST'])
 
 def login():
@@ -90,4 +95,4 @@ def login():
         return jsonify({'mensagem': 'Login realizado com sucesso!'}), 200
     else:
         return jsonify({'mensagem': 'Credenciais inválidas!'}), 400
-    
+# -------- FIM DA Rota para fazer LOGIN de um colaborador --------
