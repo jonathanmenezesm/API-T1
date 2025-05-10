@@ -8,7 +8,7 @@ class Colaborador (db.Model): #db.Model -> mapear e criar a tabela
     
     nome = Column(String(255)) #Cria a coluna nome como string de 255 caracteres
     email = Column(String(150)) #Cria a coluna email como string de 255 caracteres
-    senha = Column(String(50)) #Cria a coluna senha como string de 255 caracteres
+    senha = Column(String(255)) #Cria a coluna senha como string de 255 caracteres
     cargo = Column(String(50)) #Cria a coluna cargo como string de 255 caracteres
     salario = Column(DECIMAL) #Cria a coluna salario como decimal 
     
