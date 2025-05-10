@@ -17,7 +17,7 @@ class Colaborador (db.Model): #db.Model -> mapear e criar a tabela
     #------------------------ CONSTRUTOR ----------------------
     
     #método dunder init é um método construtor
-    def _init__ (self, nome, email, senha, cargo, salario):
+    def __init__ (self, nome, email, senha, cargo, salario):
         self.nome = nome
         self.email = email
         self.senha = senha
