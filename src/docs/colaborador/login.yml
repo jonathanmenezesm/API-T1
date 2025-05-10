@@ -1,0 +1,30 @@
+paths:
+  /colaborador/login:
+    post:
+      tags:
+        - Colaborador
+      summary: Login do colaborador
+      description: Faz login com e-mail e senha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: teste@teste.com
+                senha:
+                  type: string
+                  example: senha123
+              required:
+                - email
+                - senha
+      responses:
+        200:
+          description: Login realizado com sucesso
+        400:
+          description: Credenciais inválidas
+        404:
+          description: Usuário não encontrado
