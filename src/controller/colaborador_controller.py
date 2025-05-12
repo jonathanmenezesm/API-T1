@@ -24,6 +24,23 @@ dados = [
 def pegar_dados(): 
     return dados
 
+# -------- Rota para BUSCAR ID de um colaborador --------
+@bp_colaborador.route('/buscar_id', methods=['POST'])
+def buscar_id_colaborador():
+    dados = request.get_json()
+    email = dados.get('email')
+
+    if not email:
+        return jsonify({'erro': 'E-mail não fornecido'}), 400
+
+    colaborador = Colaborador.query.filter_by(email=email).first()
+
+    if not colaborador:
+        return jsonify({'erro': 'Colaborador não encontrado'}), 404
+
+    return jsonify({'id_colaborador': colaborador.id}), 200
+# -------- FIM DA Rota para BUSCAR ID de um colaborador --------
+
 # -------- Rota para CADASTRAR um novo colaborador --------
 #endereço/colaborador/cadastrar
 @bp_colaborador.route('/cadastrar', methods=['POST'])
