@@ -53,3 +53,39 @@ def cadastrar_reembolsos():
         except Exception as e:
             # traceback.print_exc()  # Exibe o traceback completo no terminal
             return jsonify({'erro': f'Ocorreu um erro ao cadastrar os reembolsos: {str(e)}'}), 500
+        
+# Rota para buscar reembolsos pelo número da prestação de contas
+@bp_reembolso.route('/refunds/<int:num_prestacao>', methods=['GET'])
+def buscar_reembolsos_por_prestacao(num_prestacao):
+    try:
+        reembolsos = Reembolso.query.filter_by(num_prestacao=num_prestacao).all()
+
+        if not reembolsos:
+            return jsonify({'mensagem': f'Nenhum reembolso encontrado com Nº Prest. Contas {num_prestacao}'}), 404
+
+        resultado = []
+        for r in reembolsos:
+            resultado.append({
+                'id': r.id,
+                'colaborador': r.colaborador,
+                'empresa': r.empresa,
+                'num_prestacao': r.num_prestacao,
+                'descricao': r.descricao,
+                'data': r.data.strftime('%Y-%m-%d'),
+                'tipo_reembolso': r.tipo_reembolso,
+                'centro_custo': r.centro_custo,
+                'ordem_interna': r.ordem_interna,
+                'divisao': r.divisao,
+                'pep': r.pep,
+                'moeda': r.moeda,
+                'distancia_km': r.distancia_km,
+                'valor_km': float(r.valor_km or 0),
+                'valor_faturado': float(r.valor_faturado or 0),
+                'despesa': float(r.despesa or 0),
+                'status': r.status
+            })
+
+        return jsonify(resultado), 200
+
+    except Exception as e:
+        return jsonify({'erro': f'Ocorreu um erro ao buscar os reembolsos: {str(e)}'}), 500
